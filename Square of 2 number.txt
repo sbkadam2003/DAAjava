@@ -1,0 +1,38 @@
+Square of 2 number
+
+import java.util.Scanner;
+
+public class LargeIntegerSquare {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter a large integer number:");
+        String number = sc.next();
+
+        long result = square(number);
+        System.out.println("Square of the number is: " + result);
+    }
+
+    public static long square(String number) {
+        if (number.length() == 1) {
+            return Long.parseLong(number) * Long.parseLong(number);
+        }
+
+        int mid = number.length() / 2;
+        String a = number.substring(0, mid);
+        String b = number.substring(mid);
+
+        long aSquare = square(a);
+        long bSquare = square(b);
+        long abProduct = multiply(a, b);
+
+        // Karatsuba algorithm for squaring
+        return aSquare * (long) Math.pow(10, 2 * (number.length() - mid)) +
+               (abProduct * 2) * (long) Math.pow(10, number.length() - mid) +
+               bSquare;
+    }
+
+    public static long multiply(String x, String y) {
+        return Long.parseLong(x) * Long.parseLong(y);
+    }
+}
